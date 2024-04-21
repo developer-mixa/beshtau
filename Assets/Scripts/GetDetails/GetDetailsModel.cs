@@ -21,10 +21,3 @@ public class GetDetailsModel : MonoBehaviour
     }
 
 }
-
-/* +1, 2
- * 1 -
- * 2 -
- * 4 -
- * 7 -
- */

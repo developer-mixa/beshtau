@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     [SerializeField] private LayerMask Ground = 8;
     [SerializeField] private Transform spawn;
     
-    private const float CheckRadius = 0.4f;
+    private const float CheckRadius = 0.9f;
     private const int DefaultLife = 3;
     private int _maxLife = DefaultLife;
     private Rigidbody2D _rig;
@@ -20,6 +20,8 @@ public class Player : MonoBehaviour
     
     private Coroutine _defenseCoroutine;
     private Coroutine _doubleScoreCoroutine;
+
+    public int CurrentScore => _score;
 
     [NonSerialized] public bool isOnGround;
     
@@ -126,8 +128,11 @@ public class Player : MonoBehaviour
         var bonus = other.GetComponent<Bonus>();
         if(bonus == null) return;
         bonus.Get();
-        var go = Instantiate(other.gameObject, other.gameObject.transform.parent);
-        StartCoroutine(MoveUpCoroutine(go));
+        if (bonus is not EquipmentController)
+        {
+            var go = Instantiate(other.gameObject, other.gameObject.transform.parent);
+            StartCoroutine(MoveUpCoroutine(go));
+        }
     }
     
     //If I make it in time, I'll transfer it to another layer
